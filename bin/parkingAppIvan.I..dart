@@ -24,7 +24,7 @@ ArgParser buildParser() {
 }
 
 void printUsage(ArgParser argParser) {
-  print('Usage: dart dart_application_1.dart <flags> [arguments]');
+  print('Usage: dart parkingAppIvan.I..dart <flags> [arguments]');
   print(argParser.usage);
 }
 
@@ -40,7 +40,7 @@ void main(List<String> arguments) {
       return;
     }
     if (results.wasParsed('version')) {
-      print('dart_application_1 version: $version');
+      print('parkingAppIvan.I. version: $version');
       return;
     }
     if (results.wasParsed('verbose')) {

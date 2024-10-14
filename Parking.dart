@@ -1,6 +1,33 @@
 import 'ParkingSpace.dart';
 import 'Vehicle.dart';
 
+String generateID() {
+  final now = DateTime.now();
+  return now.microsecondsSinceEpoch.toString();
+}
+
+class Parking {
+  Parking({
+    required this.vehicle,
+    required this.parkingSpace,
+    required this.startTime,
+    required this.endTime,
+    String? id,
+  }) : id = id ?? generateID();
+
+  final String id;
+  final Vehicle vehicle;
+  final ParkingSpace parkingSpace;
+  final DateTime startTime;
+  DateTime endTime;
+
+  Duration get time => endTime.difference(startTime);
+//  get time => null;
+}
+
+
+
+
 /* double calculateCost() {
     if (endTime == null) return 0.0;
     Duration duration = endTime!.difference(startTime);
@@ -8,17 +35,3 @@ import 'Vehicle.dart';
     return totalHours * parkingSpace.pricePerHour;
   }
   */
-
-class Parking {
-  Vehicle vehicle;
-  ParkingSpace parkingSpace;
-  DateTime startTime;
-  DateTime? endTime;
-
-  Parking(this.vehicle, this.parkingSpace, this.startTime, [this.endTime]);
-
-  @override
-  String toString() {
-    return 'Parking: Vehicle ${vehicle.registrationNumber} at ${parkingSpace.address} from $startTime ${endTime != null ? "to $endTime" : "(ongoing)"}';
-  }
-}

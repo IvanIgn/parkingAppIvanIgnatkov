@@ -5,25 +5,27 @@ import 'ParkingSpaceRepository.dart';
 import 'ParkingRepository.dart';
 import 'Person.dart';
 import 'Vehicle.dart';
-import 'Parking.dart';
 import 'ParkingSpace.dart';
 
 void main() {
-  var personRepo = PersonRepository();
-  var vehicleRepo = VehicleRepository();
-  var parkingSpaceRepo = ParkingSpaceRepository();
-  var parkingRepo = ParkingRepository();
+  PersonRepository personRepo = PersonRepository.instance;
+  VehicleRepository vehicleRepo = VehicleRepository.instance;
+  ParkingSpaceRepository parkingSpaceRepo = ParkingSpaceRepository.instance;
+  ParkingRepository parkingRepo = ParkingRepository.instance;
 
   while (true) {
     print('\nVälkommen till Parkeringsappen!');
+    print('\n');
     print('Vad vill du hantera?');
     print('1. Personer');
     print('2. Fordon');
     print('3. Parkeringsplatser');
     print('4. Parkeringar');
     print('5. Avsluta');
+    print('\n');
 
     stdout.write('Välj ett alternativ (1-5): ');
+    print('\n');
     final choice = stdin.readLineSync();
 
     switch (choice) {
@@ -50,13 +52,16 @@ void main() {
 
 void handlePersons(PersonRepository repo) {
   print('\nDu hanterar nu Personer. Vad vill du göra?');
+  print('\n');
   print('1. Skapa ny person');
   print('2. Visa alla personer');
   print('3. Uppdatera person');
   print('4. Ta bort person');
   print('5. Gå tillbaka');
+  print('\n');
 
   stdout.write('Välj ett alternativ (1-5): ');
+  print('\n');
   final choice = stdin.readLineSync();
 
   switch (choice) {
@@ -65,21 +70,25 @@ void handlePersons(PersonRepository repo) {
       final name = stdin.readLineSync()!;
       stdout.write('Ange personnummer: ');
       final personNumber = stdin.readLineSync()!;
-      repo.add(Person(name, personNumber));
+      repo.addPerson(Person(name: name, personNumber: personNumber));
+      print('\n');
       print('Personen har skapats.');
+      print('\n');
       break;
     case '2':
+      print('\n');
       print('Alla personer:');
-      repo.getAll().forEach(print);
+      print('\n');
+      repo.getAllPersons();
       break;
     case '3':
       stdout.write('Ange personnummer för att uppdatera: ');
       final personNumber = stdin.readLineSync()!;
-      final person = repo.getById(personNumber);
+      final person = repo.getPersonByPersonNumber(personNumber);
       if (person != null) {
         stdout.write('Ange nytt namn: ');
         person.name = stdin.readLineSync()!;
-        repo.update(personNumber, person);
+        repo.updatePerson(person);
         print('Personen har uppdaterats.');
       } else {
         print('Personen hittades inte.');
@@ -88,7 +97,7 @@ void handlePersons(PersonRepository repo) {
     case '4':
       stdout.write('Ange personnummer för att ta bort: ');
       final personNumber = stdin.readLineSync()!;
-      repo.delete(personNumber);
+      repo.deletePerson(personNumber);
       print('Personen har tagits bort.');
       break;
     case '5':
@@ -101,13 +110,16 @@ void handlePersons(PersonRepository repo) {
 void handleVehicles(
     VehicleRepository vehicleRepo, PersonRepository personRepo) {
   print('\nDu hanterar nu Fordon. Vad vill du göra?');
+  print('\n');
   print('1. Skapa nytt fordon');
   print('2. Visa alla fordon');
   print('3. Uppdatera fordon');
   print('4. Ta bort fordon');
   print('5. Gå tillbaka');
+  print('\n');
 
   stdout.write('Välj ett alternativ (1-5): ');
+  print('\n');
   final choice = stdin.readLineSync();
 
   switch (choice) {
@@ -118,31 +130,38 @@ void handleVehicles(
       final type = stdin.readLineSync()!;
       stdout.write('Ange ägarens personnummer: ');
       final personNumber = stdin.readLineSync()!;
-      final owner = personRepo.getById(personNumber);
+      final owner = personRepo.getPersonByPersonNumber(personNumber);
       if (owner != null) {
-        vehicleRepo.add(Vehicle(registrationNumber, type, owner));
+        vehicleRepo.addVehicle(Vehicle(
+            registrationNumber: registrationNumber, type: type, owner: owner));
         print('Fordonet har skapats.');
       } else {
         print('Ägaren med personnummer $personNumber hittades inte.');
       }
+      print('Fordonet har skapats.');
       break;
     case '2':
       print('Alla fordon:');
-      vehicleRepo.getAll().forEach(print);
+      vehicleRepo.getAllVehicles();
       break;
     case '3':
       stdout.write('Ange registreringsnummer för att uppdatera: ');
       final registrationNumber = stdin.readLineSync()!;
-      final vehicle = vehicleRepo.getById(registrationNumber);
-      stdout.write('Ange ny typ: ');
-      vehicle.type = stdin.readLineSync()!;
-      vehicleRepo.update(registrationNumber, vehicle);
-      print('Fordonet har uppdaterats.');
+      final vehicle =
+          vehicleRepo.getVehicleByRegistrationNumber(registrationNumber);
+      if (vehicle != null) {
+        stdout.write('Ange ny typ: ');
+        vehicle.type = stdin.readLineSync()!;
+        vehicleRepo.updateVehicle(registrationNumber, vehicle);
+        print('Fordonet har uppdaterats.');
+      } else {
+        print('Fordonet hittades inte.');
+      }
       break;
     case '4':
       stdout.write('Ange registreringsnummer för att ta bort: ');
       final registrationNumber = stdin.readLineSync()!;
-      vehicleRepo.delete(registrationNumber);
+      vehicleRepo.deleteVehicle(registrationNumber);
       print('Fordonet har tagits bort.');
       break;
     case '5':
@@ -159,8 +178,9 @@ void handleParkingSpaces(ParkingSpaceRepository repo) {
   print('3. Uppdatera parkeringsplats');
   print('4. Ta bort parkeringsplats');
   print('5. Gå tillbaka');
-
+  print('\n');
   stdout.write('Välj ett alternativ (1-5): ');
+  print('\n');
   final choice = stdin.readLineSync();
 
   switch (choice) {
@@ -171,23 +191,24 @@ void handleParkingSpaces(ParkingSpaceRepository repo) {
       final address = stdin.readLineSync()!;
       stdout.write('Ange pris per timme: ');
       final pricePerHour = double.parse(stdin.readLineSync()!);
-      repo.add(ParkingSpace(id, address, pricePerHour));
+      repo.addParkingSpace(
+          ParkingSpace(id: id, address: address, pricePerHour: pricePerHour));
       print('Parkeringsplatsen har skapats.');
       break;
     case '2':
       print('Alla parkeringsplatser:');
-      repo.getAll().forEach(print);
+      repo.getAllParkingSpaces().forEach(print);
       break;
     case '3':
       stdout.write('Ange ID för att uppdatera: ');
       final id = stdin.readLineSync()!;
-      final space = repo.getById(id);
+      final space = repo.getParkingSpaceById(id);
       if (space != null) {
         stdout.write('Ange ny adress: ');
         space.address = stdin.readLineSync()!;
         stdout.write('Ange nytt pris per timme: ');
         space.pricePerHour = double.parse(stdin.readLineSync()!);
-        repo.update(id, space);
+        repo.updateParkingSpace(id, space);
         print('Parkeringsplatsen har uppdaterats.');
       } else {
         print('Parkeringsplatsen hittades inte.');
@@ -196,7 +217,7 @@ void handleParkingSpaces(ParkingSpaceRepository repo) {
     case '4':
       stdout.write('Ange ID för att ta bort: ');
       final id = stdin.readLineSync()!;
-      repo.delete(id);
+      repo.deleteParkingSpace(id);
       print('Parkeringsplatsen har tagits bort.');
       break;
     case '5':
@@ -214,52 +235,54 @@ void handleParkings(ParkingRepository repo, VehicleRepository vehicleRepo,
   print('3. Uppdatera parkering');
   print('4. Ta bort parkering');
   print('5. Gå tillbaka');
-
+  print('\n');
   stdout.write('Välj ett alternativ (1-5): ');
+  print('\n');
   final choice = stdin.readLineSync();
 
   switch (choice) {
     case '1':
       stdout.write('Ange fordonets registreringsnummer: ');
       final registrationNumber = stdin.readLineSync()!;
-      final vehicle = vehicleRepo.getById(registrationNumber);
-      if (vehicle == null) {
-        print(
-            'Fordonet med registreringsnummer $registrationNumber hittades inte.');
-        break;
-      }
+      final vehicle =
+          vehicleRepo.getVehicleByRegistrationNumber(registrationNumber);
       stdout.write('Ange parkeringsplatsens ID: ');
       final spaceId = stdin.readLineSync()!;
-      final parkingSpace = spaceRepo.getById(spaceId);
+      final parkingSpace = spaceRepo.getParkingSpaceById(spaceId);
       if (parkingSpace == null) {
         print('Parkeringsplatsen med ID $spaceId hittades inte.');
         break;
       }
-      repo.add(Parking(vehicle, parkingSpace, DateTime.now()));
-      print('Parkeringen har skapats.');
+      if (vehicle != null) {
+        repo.addParking(spaceId, vehicle.registrationNumber, DateTime.now());
+        print('Parkeringen har skapats.');
+      } else {
+        print(
+            'Fordonet med registreringsnummer $registrationNumber hittades inte.');
+      }
       break;
     case '2':
       print('Alla parkeringar:');
-      repo.getAll().forEach(print);
+      repo.getAllParkings();
       break;
     case '3':
       stdout.write('Ange registreringsnummer för parkering att uppdatera: ');
       final registrationNumber = stdin.readLineSync()!;
-      final parking = repo.getByVehicleRegistration(registrationNumber);
+      final parking = repo.getParkingByVehicleRegistration(registrationNumber);
       if (parking != null) {
         stdout.write('Ange ny sluttid (YYYY-MM-DD HH:MM): ');
         final newEndTime = DateTime.parse(stdin.readLineSync()!);
         parking.endTime = newEndTime;
-        repo.update(registrationNumber, parking);
+        repo.updateParking(registrationNumber, parking);
         print('Parkeringen har uppdaterats');
       } else {
-        print('Parkeringen med $registrationNumber hittades inte.');
+        print('Parkeringen hittades inte.');
       }
       break;
     case '4':
       stdout.write('Ange registreringsnummer för att ta bort: ');
       final registrationNumber = stdin.readLineSync()!;
-      vehicleRepo.delete(registrationNumber);
+      repo.deleteParking(registrationNumber);
       print('Parkeringen har tagits bort.');
       break;
     case '5':
