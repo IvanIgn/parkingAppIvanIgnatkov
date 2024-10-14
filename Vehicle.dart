@@ -23,9 +23,9 @@ class Vehicle {
   // Deserialisering: Skapa ett objekt från JSON
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
-      json['registrationNumber'] as String,
-      json['type'] as String,
-      Person.fromJson(json['owner']
+      registrationNumber: json['registrationNumber'] as String,
+      type: json['type'] as String,
+      owner: Person.fromJson(json['owner']
           as Map<String, dynamic>), // Deserialisera Person-objektet
     );
   }

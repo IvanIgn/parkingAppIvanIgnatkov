@@ -32,18 +32,9 @@ class ParkingSpaceRepository {
         return parkingSpace;
       }
     }
-    print('Fel: ParkingSpace med id $id hittades inte');
+    print('Fel: Parkeringsplats med id $id hittades inte');
     return null;
   }
-
-  // void updateParkingSpace(String id, ParkingSpace updatedParkingSpace) {
-  //   for (int i = 0; i < _parkingSpaces.length; i++) {
-  //     if (_parkingSpaces[i].id == id) {
-  //       _parkingSpaces[i] = updatedParkingSpace;
-  //       return;
-  //     }
-  //   }
-  // }
 
   void updateParkingSpace(String id, ParkingSpace updatedParkingSpace) {
     final index = parkingSpacesList.indexWhere((p) => p.id == id);
@@ -54,11 +45,6 @@ class ParkingSpaceRepository {
       print('Parkeringsplats med id $id hittades inte.');
     }
   }
-
-//   void deleteParkingSpace(String id) {
-//     _parkingSpaces.removeWhere((space) => space.id == id);
-//   }
-// }
 
   void deleteParkingSpace(String parkingID) {
     final index =

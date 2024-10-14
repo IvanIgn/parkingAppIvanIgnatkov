@@ -1,6 +1,5 @@
 //import 'dart:io';
 import 'Vehicle.dart';
-import 'Person.dart';
 //import 'PersonRepository.dart';
 //import 'VehicleRepository.dart';
 
@@ -32,7 +31,7 @@ class VehicleRepository {
     if (vehiclesList.isNotEmpty) {
       for (var vehicle in vehiclesList) {
         print(
-            'Vehicle: ${vehicle.registrationNumber}\n , Type: ${vehicle.type}\n , Owner: ${vehicle.owner.name}\n , Personnummer: ${vehicle.owner.personNumber}\n ');
+            'Fordon: ${vehicle.registrationNumber}\n , Typ: ${vehicle.type}\n , Ägare: ${vehicle.owner.name}\n , Personnummer: ${vehicle.owner.personNumber}\n ');
       }
     } else {
       print('Finns inga fordon i listan');
@@ -43,13 +42,13 @@ class VehicleRepository {
     for (var vehicle in vehiclesList) {
       if (vehicle.registrationNumber == registrationNumber) {
         print(
-            'Vehicle: ${vehicle.registrationNumber}, Type: ${vehicle.type}, Owner: ${vehicle.owner.name}, Personnummer: ${vehicle.owner.personNumber}');
+            'Fordon: ${vehicle.registrationNumber}, Typ: ${vehicle.type}, "Ägare": ${vehicle.owner.name}, Personnummer: ${vehicle.owner.personNumber}');
 
         return vehicle;
       }
     }
     print(
-        'Ошибка: Fordon med registreringsnummer $registrationNumber hittades inte');
+        'Fel: Fordon med registreringsnummer $registrationNumber hittades inte');
     return null;
   }
 

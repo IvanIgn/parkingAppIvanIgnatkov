@@ -287,8 +287,13 @@ void handleParkings(ParkingRepository repo, VehicleRepository vehicleRepo,
     case '4':
       stdout.write('Ange registreringsnummer för att ta bort: ');
       final registrationNumber = stdin.readLineSync()!;
-      repo.deleteParking(registrationNumber);
-      print('Parkeringen har tagits bort.');
+      final parking = repo.getParkingByVehicleRegistration(registrationNumber);
+      if (parking != null) {
+        repo.deleteParking(registrationNumber);
+        print('Parkeringen har tagits bort.');
+      } else {
+        print('Parkeringen hittades inte.');
+      }
       break;
     case '5':
       return;
