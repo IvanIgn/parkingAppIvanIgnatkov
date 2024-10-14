@@ -10,14 +10,14 @@ class VehicleRepository {
   VehicleRepository._internal();
 
   final List<Vehicle> vehiclesList = [
-    Vehicle(
-      registrationNumber: '0000',
-      type: 'Car',
-      owner: Person(
-        name: 'Jonn Johnson',
-        personNumber: '12345678902',
-      ),
-    )
+    //  Vehicle(
+    //    registrationNumber: '0000',
+    //   type: 'Car',
+    //   owner: Person(
+    //    name: 'Jonn Johnson',
+    //    personNumber: '12345678902',
+    //  ),
+    //  )
   ];
 
   void addVehicle(Vehicle vehicle) {
@@ -39,67 +39,6 @@ class VehicleRepository {
     }
   }
 
-/*
-  Vehicle getVehicleByRegistrationID(String registrationNumber) {
-    return _vehiclesList.firstWhere(
-      (vehicle) => vehicle.registrationNumber == registrationNumber,
-      orElse: () {
-        print(
-            'Vehicle med registreringsnummer $registrationNumber hittades inte');
-        return Vehicle('unknown', 'unknown', Person('unknown', '000000-0000'));
-      },
-    );
-  }
-*/
-/*
-  void getVehicleByRegistrationNumber(String registrationNumber) {
-    final vehicle = _vehiclesList.firstWhere(
-      (vehicle) => vehicle.registrationNumber == registrationNumber,
-      orElse: () {
-        print(
-            'Vehicle med registreringsnummer $registrationNumber hittades inte');
-        return Vehicle(
-          registrationNumber: 'unknown',
-          type: 'unknown',
-          owner: Person(name: 'unknown', personNumber: '000000-0000'),
-        );
-      },
-    );
-    print(
-        'Vehicle: ${vehicle.registrationNumber}, Type: ${vehicle.type}, Owner: ${vehicle.owner.name}, Personnummer: ${vehicle.owner.personNumber}');
-  }
-
-  */
-/*
-  void updateVehicle(String registrationNumber, Vehicle updatedVehicle) {
-    for (int i = 0; i < _vehiclesList.length; i++) {
-      if (_vehiclesList[i].registrationNumber == registrationNumber) {
-        _vehiclesList[i] = updatedVehicle;
-        return;
-      }
-    }
-  }
-*/
-
-/*
-  Vehicle? getVehicleByRegistrationNumber(String registrationNumber) {
-    final vehicle = _vehiclesList.firstWhere(
-      (vehicle) => vehicle.registrationNumber == registrationNumber,
-      orElse: () {
-        print(
-            'Vehicle med registreringsnummer $registrationNumber hittades inte');
-        return Vehicle(
-          registrationNumber: 'unknown',
-          type: 'unknown',
-          owner: Person(name: 'unknown', personNumber: '000000-0000'),
-        );
-      },
-    );
-    print(
-        'Vehicle: ${vehicle.registrationNumber}, Type: ${vehicle.type}, Owner: ${vehicle.owner.name}, Personnummer: ${vehicle.owner.personNumber}');
-  }
-*/
-
   Vehicle? getVehicleByRegistrationNumber(String registrationNumber) {
     for (var vehicle in vehiclesList) {
       if (vehicle.registrationNumber == registrationNumber) {
@@ -119,11 +58,12 @@ class VehicleRepository {
         .indexWhere((v) => v.registrationNumber == registrationNumber);
     if (index != -1) {
       vehiclesList[index] = updatedVehicle;
-      print('Vehicle ${updatedVehicle.registrationNumber} updated.');
+      print('Fordon ${updatedVehicle.registrationNumber} uppdaterad.');
     } else {
       print(
-          'Fel: Vehicle med registreringsnummer ${updatedVehicle.registrationNumber} hittades inte.');
+          'Fel: Fordon med registreringsnummer ${updatedVehicle.registrationNumber} hittades inte.');
     }
+    vehiclesList[index] = updatedVehicle;
   }
 
   void deleteVehicle(String registrationNumber) {

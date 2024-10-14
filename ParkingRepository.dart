@@ -38,12 +38,7 @@ class ParkingRepository {
           DateTime.now(), endTime, addParkingSpace.pricePerHour.toDouble());
     } catch (e) {
       print('Ett fel uppstod: $e');
-      getBackToMainPage('Ett fel uppstod: $e');
     }
-  }
-
-  void getBackToMainPage(String message) {
-    print(message);
   }
 
   void getAllParkings() {

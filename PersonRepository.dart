@@ -6,7 +6,7 @@ class PersonRepository {
   PersonRepository._internal();
 
   final List<Person> _personsList = [
-    Person(name: 'Namn', personNumber: '000000-0000')
+    // Person(name: 'Namn', personNumber: '000000-0000')
   ];
 
   void addPerson(Person person) {
@@ -14,24 +14,11 @@ class PersonRepository {
     print('Person ${person.name} added.');
   }
 
-/*
-  void getAllPersons() {
-    if (_personsList.isNotEmpty) {
-      for (var person in _personsList) {
-        print('Person: ${person.name}, personnummer: ${person.personNumber}');
-      }
-    } else {
-      print('Finns inga personer i listan');
-    }
-  }
-*/
-
   void getAllPersons() {
     if (_personsList.isNotEmpty) {
       for (var person in _personsList) {
         // print('Person: ${person.name}, personnummer: ${person.personNumber}');
-        print(
-            'Person: ${person.name}\n  Personnummer: ${person.personNumber}\n');
+        print('Person: ${person.name}\nPersonnummer: ${person.personNumber}\n');
       }
     } else {
       print('Finns inga personer i listan');
@@ -40,18 +27,6 @@ class PersonRepository {
     }
   }
 
-/*
-  void getPersonByPersonNumber(String personNumber) {
-    final person = c.firstWhere(
-      (person) => person.personNumber == personNumber,
-      orElse: () {
-        print('Ошибка: Person с personNumber $personNumber не найден');
-        return Person(name: 'Unknown', personNumber: '000000-0000');
-      },
-    );
-    print('Person: ${person.name}, personnummer: ${person.personNumber}');
-  }
-*/
   Person? getPersonByPersonNumber(String personNumber) {
     for (var person in _personsList) {
       if (person.personNumber == personNumber) {
@@ -59,7 +34,7 @@ class PersonRepository {
         return person;
       }
     }
-    print('Ошибка: Person с personNumber $personNumber не найден');
+    print('Fel: Person med personnummer $personNumber hittades inte');
     return null;
   }
 
@@ -68,7 +43,7 @@ class PersonRepository {
         .indexWhere((p) => p.personNumber == updatedPerson.personNumber);
     if (index != -1) {
       _personsList[index] = updatedPerson;
-      print('Person ${updatedPerson.name} обновлен.');
+      print('Person ${updatedPerson.name} uppdaterades.');
     } else {
       print(
           'Fel: Person med personnummer ${updatedPerson.personNumber} hittades inte.');
@@ -80,9 +55,9 @@ class PersonRepository {
         _personsList.indexWhere((p) => p.personNumber == personNumber);
     if (index != -1) {
       _personsList.removeAt(index);
-      print('Person с personNumber $personNumber удален.');
+      print('Person med personnummer $personNumber togs bort.');
     } else {
-      print('Ошибка: Person с personNumber $personNumber не найден.');
+      print('Fel: Person med personNumber $personNumber hittades inte.');
     }
   }
 }

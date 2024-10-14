@@ -22,16 +22,32 @@ class Parking {
   DateTime endTime;
 
   Duration get time => endTime.difference(startTime);
-//  get time => null;
-}
 
-
-
-
-/* double calculateCost() {
-    if (endTime == null) return 0.0;
-    Duration duration = endTime!.difference(startTime);
-    double totalHours = duration.inMinutes / 60.0;
-    return totalHours * parkingSpace.pricePerHour;
+  // Serialisering: Konvertera ett objekt till JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'vehicle': vehicle.toJson(), // Serialisera Vehicle-objektet
+      'parkingSpace':
+          parkingSpace.toJson(), // Serialisera ParkingSpace-objektet
+      'startTime':
+          startTime.toIso8601String(), // Konvertera DateTime till ISO-sträng
+      'endTime': endTime
+          .toIso8601String(), // Konvertera DateTime till ISO-sträng eller null
+    };
   }
-  */
+
+  // Deserialisering: Skapa ett objekt från JSON
+  factory Parking.fromJson(Map<String, dynamic> json) {
+    return Parking(
+      vehicle: Vehicle.fromJson(json['vehicle']
+          as Map<String, dynamic>), // Deserialisera Vehicle-objektet
+      parkingSpace: ParkingSpace.fromJson(json['parkingSpace']
+          as Map<String, dynamic>), // Deserialisera ParkingSpace-objektet
+      startTime: DateTime.parse(
+          json['startTime'] as String), // Konvertera ISO-sträng till DateTime
+      endTime: json['endTime'] != null
+          ? DateTime.parse(json['endTime'] as String)
+          : DateTime.now(), // Hantera null för sluttid
+    );
+  }
+}

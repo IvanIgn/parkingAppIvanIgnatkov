@@ -10,4 +10,23 @@ class Vehicle {
   final String registrationNumber;
   late final String type;
   final Person owner;
+
+  // Serialisering: Konvertera ett objekt till JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'registrationNumber': registrationNumber,
+      'type': type,
+      'owner': owner.toJson(), // Serialisera Person-objektet
+    };
+  }
+
+  // Deserialisering: Skapa ett objekt från JSON
+  factory Vehicle.fromJson(Map<String, dynamic> json) {
+    return Vehicle(
+      json['registrationNumber'] as String,
+      json['type'] as String,
+      Person.fromJson(json['owner']
+          as Map<String, dynamic>), // Deserialisera Person-objektet
+    );
+  }
 }

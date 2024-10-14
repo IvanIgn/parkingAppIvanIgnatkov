@@ -14,8 +14,9 @@ void main() {
   ParkingRepository parkingRepo = ParkingRepository.instance;
 
   while (true) {
-    print('\nVälkommen till Parkeringsappen!');
-    print('\n');
+    print('----------------------------------');
+    print('\n Välkommen till Parkeringsappen! \n');
+    print('----------------------------------');
     print('Vad vill du hantera?');
     print('1. Personer');
     print('2. Fordon');
@@ -82,6 +83,7 @@ void handlePersons(PersonRepository repo) {
       repo.getAllPersons();
       break;
     case '3':
+      print('\n');
       stdout.write('Ange personnummer för att uppdatera: ');
       final personNumber = stdin.readLineSync()!;
       final person = repo.getPersonByPersonNumber(personNumber);
@@ -95,7 +97,9 @@ void handlePersons(PersonRepository repo) {
       }
       break;
     case '4':
+      print('\n');
       stdout.write('Ange personnummer för att ta bort: ');
+      print('\n');
       final personNumber = stdin.readLineSync()!;
       repo.deletePerson(personNumber);
       print('Personen har tagits bort.');
@@ -109,6 +113,7 @@ void handlePersons(PersonRepository repo) {
 
 void handleVehicles(
     VehicleRepository vehicleRepo, PersonRepository personRepo) {
+  print('\n');
   print('\nDu hanterar nu Fordon. Vad vill du göra?');
   print('\n');
   print('1. Skapa nytt fordon');
